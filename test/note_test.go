@@ -20,6 +20,32 @@ func TestInsertNotes(t *testing.T) {
 	fmt.Printf("Inserted Notes ID: %v\n", result)
 }
 
+func TestInsertAdmin(t *testing.T) {
+	username := "admin"
+	password := "123"
+
+	insertedID, err := module.InsertAdmin(username, password)
+	if err != nil {
+		t.Errorf("Failed to insert admin: %v", err)
+		return
+	}
+
+	t.Logf("Inserted Admin ID: %v\n", insertedID)
+}
+
+func TestLoginAdmin(t *testing.T) {
+	username := "admin"
+	password := "123"
+
+	admin, err := module.LoginAdmin(username, password)
+	if err != nil {
+		t.Errorf("Failed to login admin: %v", err)
+		return
+	}
+
+	t.Logf("Logged in Admin: %+v\n", admin)
+}
+
 func TestGetAllNotes(t *testing.T) {
 	data, err := module.GetAllNotes()
 	if err != nil {
