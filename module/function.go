@@ -48,7 +48,7 @@ func InsertAdmin(username, password string) (interface{}, error) {
         Password: hashedPassword,
     }
 
-    insertResult, err := config.Database.Collection("admins").InsertOne(context.TODO(), admin)
+    insertResult, err := config.Database.Collection("admin").InsertOne(context.TODO(), admin)
     if err != nil {
         return nil, err
     }
@@ -59,7 +59,7 @@ func InsertAdmin(username, password string) (interface{}, error) {
 func LoginAdmin(username, password string) (model.Admin, error) {
     var admin model.Admin
 
-    err := config.Database.Collection("admins").FindOne(context.TODO(), bson.M{"username": username}).Decode(&admin)
+    err := config.Database.Collection("admin").FindOne(context.TODO(), bson.M{"username": username}).Decode(&admin)
     if err != nil {
         return model.Admin{}, fmt.Errorf("admin not found: %v", err)
     }
