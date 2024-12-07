@@ -21,8 +21,8 @@ func TestInsertNotes(t *testing.T) {
 }
 
 func TestInsertAdmin(t *testing.T) {
-	username := "admin"
-	password := "123"
+	username := ""
+	password := ""
 
 	insertedID, err := module.InsertAdmin(username, password)
 	if err != nil {
@@ -34,8 +34,8 @@ func TestInsertAdmin(t *testing.T) {
 }
 
 func TestLoginAdmin(t *testing.T) {
-	username := "admin"
-	password := "123"
+	username := ""
+	password := ""
 
 	admin, err := module.LoginAdmin(username, password)
 	if err != nil {
