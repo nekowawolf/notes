@@ -11,3 +11,10 @@ type Notes struct {
 	Content string             `bson:"content,omitempty" json:"content,omitempty"` 
 	Date    time.Time   	   `bson:"date,omitempty" json:"date,omitempty"` 
 }
+
+type Admin struct {
+	ID       primitive.ObjectID `bson:"_id,omitempty" json:"_id,omitempty"`
+	Username string             `bson:"username" json:"username"`
+	Password string             `bson:"password" json:"password"` 
+}
+
