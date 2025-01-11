@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/nekowawolf/notes/config"
 	"github.com/nekowawolf/notes/model"
-	"github.com/nekowawolf/notes/auth"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/bson"
 )
@@ -35,43 +34,6 @@ func InsertNotes(title, content string) (interface{}, error) {
 
 	return insertResult.InsertedID, nil
 }
-
-func InsertAdmin(username, password string) (interface{}, error) {
-    hashedPassword, err := auth.HashPassword(password)
-    if err != nil {
-        return nil, err
-    }
-
-    admin := model.Admin{
-        ID:       primitive.NewObjectID(),
-        Username: username,
-        Password: hashedPassword,
-    }
-
-    insertResult, err := config.Database.Collection("admin").InsertOne(context.TODO(), admin)
-    if err != nil {
-        return nil, err
-    }
-
-    return insertResult.InsertedID, nil
-}
-
-func LoginAdmin(username, password string) (model.Admin, error) {
-    var admin model.Admin
-
-    err := config.Database.Collection("admin").FindOne(context.TODO(), bson.M{"username": username}).Decode(&admin)
-    if err != nil {
-        return model.Admin{}, fmt.Errorf("admin not found: %v", err)
-    }
-
-    // Compare password
-    if err := auth.VerifyPassword(admin.Password, password); err != nil {
-        return model.Admin{}, fmt.Errorf("invalid password: %v", err)
-    }
-
-    return admin, nil
-}
-
 
 func GetAllNotes() ([]model.Notes, error) {
 	collection := config.Database.Collection("notes")
@@ -135,6 +97,3 @@ func DeleteNotesByID(id primitive.ObjectID) error {
 
     return nil
 }
-
-
-
